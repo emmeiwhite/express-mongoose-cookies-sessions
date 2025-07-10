@@ -49,6 +49,14 @@ app.get('/api/products/:productId', (request, response) => {
   response.status(200).json(resProduct)
 })
 
+// Query Parameter  localhost:3000/api/search?keyword=chicken
+
+app.get('/api/search', (request, response) => {
+  const keyword = request.query.keyword
+  console.log(keyword)
+
+  response.send(`Searching for ${keyword}`)
+})
 app.listen(PORT, () => {
   console.log('Server running on PORT :', PORT)
 })
