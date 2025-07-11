@@ -22,6 +22,12 @@ app.get('/users', (req, res) => {
 })
 
 // Handling all errors with middleware
+
+app.use((error, request, response, next) => {
+  console.log(error.message)
+  response.send('Interval Server Error : 500')
+})
+
 app.listen(PORT, () => {
   console.log(`Running on Port: ${PORT}`)
 })
