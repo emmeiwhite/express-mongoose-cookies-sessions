@@ -17,6 +17,11 @@ app.get('/', (request, response) => {
   response.send('Express Server Home page')
 })
 
+app.get('/users', (req, res) => {
+  throw new Error('ERROR: Could not fetch users')
+})
+
+// Handling all errors with middleware
 app.listen(PORT, () => {
   console.log(`Running on Port: ${PORT}`)
 })
