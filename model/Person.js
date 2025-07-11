@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 // Schema defines the structure of our document inside the MongoDB collection
 const personSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  age: { type: number, required: true },
+  age: { type: Number, required: true },
   email: { type: String, required: true, unique: true },
   createdAt: { type: Date, default: Date.now() }
 })
