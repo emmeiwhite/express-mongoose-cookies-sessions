@@ -1,15 +1,13 @@
 import express from 'express'
+import { connectDB } from './config/db.js'
 const app = express()
+
+await connectDB()
 
 const PORT = process.env.PORT || 3000
 
-// Set EJS as the View Engine
-app.set('view engine', 'ejs')
-
 app.get('/', (req, res) => {
-  const userName = 'John Doe!'
-
-  res.render('index', { userName })
+  res.send('Express Server')
 })
 app.listen(PORT, () => {
   console.log(`Running on Port: ${PORT}`)
