@@ -13,6 +13,7 @@ app.use((req, res, next) => {
 })
 
 app.get('/', (request, response) => {
+  hello
   console.log('2.After coming from the middleware')
   response.send('Express Server Home page')
 })
