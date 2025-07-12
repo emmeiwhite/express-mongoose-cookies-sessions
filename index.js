@@ -1,33 +1,13 @@
 import express from 'express'
-import { connectDB } from './config/db.js'
-import { Person } from './model/Person.js'
 const app = express()
+import cookieParser from 'cookie-parser'
 
-await connectDB()
+app.use(cookieParser())
 
-const PORT = process.env.PORT || 3000
-
-app.get('/', (req, res) => {
-  res.send('Express Server')
+app.get('/', (request, response) => {
+  response.cookie('cookie1', 'eat and enjoy')
+  response.send('Express Home')
 })
-
-// Let's create routes to create persons
-
-app.post('/api/persons', express.json(), async (request, response) => {
-  const { name, age, email } = request.body
-
-  // Save Person to the Database
-  const newPerson = new Person({
-    name,
-    age,
-    email
-  })
-
-  await newPerson.save()
-  console.log(newPerson)
-  response.send('Person Created!')
-})
-
-app.listen(PORT, () => {
-  console.log(`Running on Port: ${PORT}`)
+app.listen(3000, () => {
+  console.log('Server is listening on port 3000')
 })
