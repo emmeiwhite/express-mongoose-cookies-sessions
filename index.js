@@ -1,24 +1,30 @@
 import express from 'express'
 const app = express()
-import cookieParser from 'cookie-parser'
 
-app.use(cookieParser())
+import session from 'express-session'
 
-app.get('/', (request, response) => {
-  response.cookie('cookie1', 'eat and enjoy')
-  response.send('Express Home')
+app.use(
+  session({
+    secret: 'sample-secret', //sid=sample-secret
+    resave: false,
+    saveUninitialized: false
+  })
+)
+
+app.get('/', (req, res) => {
+  res.send('<h1>Express Application!</h1>')
 })
 
-app.get('/fetch', (request, response) => {
-  console.log(request.cookies)
-  response.send('API Data Fetched!')
-})
-
-app.get('/clear-cookie', (request, response) => {
-  response.clearCookie('cookie1')
-  response.send('Cookie cleared!')
+app.get('/visit', (req, res) => {
+  if (req.session.page_viiews) {
+    req.session.page_views++
+    res.send(`You visited this page ${req.session.page_views} times`)
+  } else {
+    req.session.page_views = 1
+    res.send('Welcome to this page for the first time')
+  }
 })
 
 app.listen(3000, () => {
-  console.log('Server is listening on port 3000')
+  console.log('Server running on port 3000')
 })
