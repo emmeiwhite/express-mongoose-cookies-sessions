@@ -11,15 +11,21 @@ app.use(cookieParser())
 
 app.get('/', (req, res) => {
   res.cookie('userName', 'Rather Bhai')
+  res.cookie('location', 'Srinagar')
+  res.cookie('isAdmin', 'true')
   res.send('<h1>Express App</h1>')
 })
 
+// Cookie-Parser reads the cookies and makes them available via request.cookies object
+
 app.get('/login', (req, res) => {
-  const cookieValue = req.cookies('userName')
+  console.log(req.cookies)
+  const cookieValue = req.cookies
   res.json({
     cookie: cookieValue
   })
 })
+
 app.listen(3000, () => {
   console.log('Serveer running on Port 3000')
 })
