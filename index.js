@@ -26,6 +26,14 @@ app.get('/login', (req, res) => {
   })
 })
 
+// Destroy Cookies in a route
+app.get('/clear-cookies', (req, res) => {
+  res.clearCookie('userName')
+  res.clearCookie('location')
+  res.clearCookie('isAdmin')
+  res.send('Cookies destroyed')
+})
+
 app.listen(3000, () => {
   console.log('Serveer running on Port 3000')
 })
