@@ -1,30 +1,25 @@
+/** --- Session Based Authentication --- */
+
 import express from 'express'
 const app = express()
 
-import session from 'express-session'
+// Let me practice cookie sending and receiving
 
-app.use(
-  session({
-    secret: 'sample-secret', //sid=sample-secret
-    resave: false,
-    saveUninitialized: false
-  })
-)
+import cookieParser from 'cookie-parser'
+
+app.use(cookieParser())
 
 app.get('/', (req, res) => {
-  res.send('<h1>Express Application!</h1>')
+  res.cookie('userName', 'Rather Bhai')
+  res.send('<h1>Express App</h1>')
 })
 
-app.get('/visit', (req, res) => {
-  if (req.session.page_viiews) {
-    req.session.page_views++
-    res.send(`You visited this page ${req.session.page_views} times`)
-  } else {
-    req.session.page_views = 1
-    res.send('Welcome to this page for the first time')
-  }
+app.get('/login', (req, res) => {
+  const cookieValue = req.cookies('userName')
+  res.json({
+    cookie: cookieValue
+  })
 })
-
 app.listen(3000, () => {
-  console.log('Server running on port 3000')
+  console.log('Serveer running on Port 3000')
 })
