@@ -24,6 +24,30 @@ app.post('/register', async (req, res) => {
   // register the user in the database (passwords are encrypted but for this one let's keep it simple)
 
   users.push({ username, password })
+  res.json({
+    users
+  })
+})
+
+app.post('/login', async (req, res) => {
+  const { username, password } = req.body
+
+  const currentUser = users.find(user => user.username === username)
+  if (!currentUser) {
+    return res.status(404).json({
+      message: 'User Not Found'
+    })
+  }
+
+  if (currentUser.password !== password) {
+    return res.status(401).json({
+      message: 'Invalid Password'
+    })
+  }
+
+  // And if the user is registered, we'll setup the session
+  req.session.userName = currentUser.username
+
   res.send('<h2>User Registered!</h2>')
 })
 
