@@ -29,6 +29,11 @@ app.post('/register', async (req, res) => {
   })
 })
 
+// Login
+app.get('/login', (req, res) => {
+  res.send('<h2>Please login first</h2>')
+})
+
 app.post('/login', async (req, res) => {
   const { username, password } = req.body
 
@@ -49,6 +54,16 @@ app.post('/login', async (req, res) => {
   req.session.userName = currentUser.username
 
   res.send('<h2>User Registered!</h2>')
+})
+
+// Protected Route /dashboard
+
+app.get('/dashboard', (req, res) => {
+  if (!req.session.userName) {
+    return res.redirect('/login')
+  }
+
+  res.send(`<h2>Welcome ${req.session.userName}</h2>`)
 })
 
 app.listen(3000, () => {
