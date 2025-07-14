@@ -10,3 +10,13 @@
 ## Install Mongoose & Connect to MongoDBAtlas
 
 `npm install mongoose`
+
+## 🛠️ Project Stack
+
+| Area         | Tool                                       |
+| ------------ | ------------------------------------------ |
+| Backend      | Express                                    |
+| DB           | MongoDB Atlas                              |
+| Auth         | JWT + bcrypt                               |
+| Testing Tool | Postman                                    |
+| Frontend     | (Optional) Next.js or Postman only for now |
