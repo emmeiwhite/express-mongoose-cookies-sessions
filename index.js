@@ -1,4 +1,5 @@
 import express from 'express'
+import bcrypt from 'bcrypt'
 const app = express()
 
 app.use(express.json())
@@ -10,10 +11,12 @@ app.get('/', (req, res) => {
 })
 
 /** 1. Register User | req.body and save contents to the users array */
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => {
   const { email, password } = req.body
 
-  users.push({ email, password })
+  // let's encrypt the password before storing into the database
+  const hashedPassword = await bcrypt.hash(password, 10)
+  users.push({ email, password: hashedPassword })
   res.json({
     message: `User with email ${email} registered`
   })
