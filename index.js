@@ -48,6 +48,11 @@ app.post('/login', async (req, res) => {
   }
 
   // If gmail and password are correct, let's create a JWT token for the user
+
+  // ✅ Step 3: Success — user is authenticated
+  res.json({
+    message: `Login successful! Welcome, ${email}`
+  })
 })
 
 app.listen(3000, (req, res) => {
