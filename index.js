@@ -57,12 +57,16 @@ app.post('/login', async (req, res) => {
 })
 
 app.get('/dashboard', (req, res) => {
-  const token = req.header('Authorization')
-  const decodedToken = jwt.verify(token, 'secret#test#secret')
+  try {
+    const token = req.header('Authorization')
+    const decodedToken = jwt.verify(token, 'secret#test#secret')
 
-  if (decodedToken.email) {
-    res.send(`Welcome ${decodedToken.email}`)
-  } else {
+    if (decodedToken.email) {
+      res.send(`Welcome ${decodedToken.email}`)
+    } else {
+      res.send('Access Denied!')
+    }
+  } catch (error) {
     res.send('Access Denied!')
   }
 })
