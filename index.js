@@ -1,5 +1,7 @@
 import express from 'express'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
+
 const app = express()
 
 app.use(express.json())
@@ -49,10 +51,20 @@ app.post('/login', async (req, res) => {
 
   // If gmail and password are correct, let's create a JWT token for the user
 
-  // ✅ Step 3: Success — user is authenticated
-  res.json({
-    message: `Login successful! Welcome, ${email}`
-  })
+  const token = jwt.sign({ email }, 'secret#test#secret')
+  res.send({ token })
+  /** After sending this token, we'll use the /dashboard */
+})
+
+app.get('/dashboard', (req, res) => {
+  const token = req.header('Authorization')
+  const decodedToken = jwt.verify(token, 'secret#test#secret')
+
+  if (decodedToken.email) {
+    res.send(`Welcome ${decodedToken.email}`)
+  } else {
+    res.send('Access Denied!')
+  }
 })
 
 app.listen(3000, (req, res) => {
